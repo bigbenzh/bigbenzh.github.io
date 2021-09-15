@@ -153,6 +153,72 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/14/%E7%BB%88%E7%BB%93%E7%9A%84%E7%99%BE%E5%90%88%E8%8A%B1-Ender-Lilies-%E7%94%A8UEViewer%E8%A7%A3%E5%8C%85%E5%87%BA%E9%94%99%E7%9A%84%E4%B8%B4%E6%97%B6%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="bigbenzh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不知名的小博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/14/%E7%BB%88%E7%BB%93%E7%9A%84%E7%99%BE%E5%90%88%E8%8A%B1-Ender-Lilies-%E7%94%A8UEViewer%E8%A7%A3%E5%8C%85%E5%87%BA%E9%94%99%E7%9A%84%E4%B8%B4%E6%97%B6%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="post-title-link" itemprop="url">终结的百合花 Ender Lilies 用UEViewer解包出错的临时解决办法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-15 01:16:05 / 修改时间：13:37:24" itemprop="dateCreated datePublished" datetime="2021-09-15T01:16:05+08:00">2021-09-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Ender Lilies的美术确实顶，特别是暂停界面的白毛萝莉特写，所以想把它弄出来做桌面背景。但今天用UEViewer拆包ender lilies时发现居然会出错，报错内容为assertion failed: !isUnicode。本人水平有限，不知道为何导致这个问题，也不知道怎么修复。但事实上注释掉源代码中的assert，是可以成功导出图片的。至少是部分。</p>
+<p>（注：如果你只是为了找暂停界面的莉莉图片，不需要这么麻烦。她在Game/_Zenith/UI/Textures/Characters里，可以直接导出）</p>
+<p>定位错误位置：<br>UEViewer/Unreal/UnrealPackage/UnPackage4.cpp SerializeFNameSerializedView 中<br>注释掉第671行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//assert(!isUnicode);</span><br></pre></td></tr></table></figure>
+<p>同时注释掉 LoadNameTableIoStore 中的第695行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//assert(Data == EndPosition);</span><br></pre></td></tr></table></figure>
+
+<p>重新编译就可以导出大部分图片（大概）</p>
+<style>figcaption {color: grey;font-size:15px; text-align: center}</style><figure><img src='T_Record_Image_1.png' width="50%" height="50%" /><figcaption>可爱，可惜是半透明的TAT</figcaption></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/%E5%8D%81%E4%B8%89%E6%9C%BA%E5%85%B5%E9%98%B2%E5%8D%AB%E5%9C%88-%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9B%BE%E7%89%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -842,7 +908,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
