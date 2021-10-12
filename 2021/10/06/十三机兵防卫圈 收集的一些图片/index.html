@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://bigbenzh.github.io/2021/10/06/%E5%8D%81%E4%B8%89%E6%9C%BA%E5%85%B5%E9%98%B2%E5%8D%AB%E5%9C%88%20%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9B%BE%E7%89%87/h2Q5-6o28XoZ6mT3cS1hc-u0.png">
 <meta property="og:image" content="https://bigbenzh.github.io/2021/10/06/%E5%8D%81%E4%B8%89%E6%9C%BA%E5%85%B5%E9%98%B2%E5%8D%AB%E5%9C%88%20%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9B%BE%E7%89%87/h2Q5-e9c0X13ZapT3cS2yo-1o0.jpg">
 <meta property="article:published_time" content="2021-10-06T07:21:49.000Z">
-<meta property="article:modified_time" content="2021-10-12T12:48:57.480Z">
+<meta property="article:modified_time" content="2021-10-12T12:50:49.103Z">
 <meta property="article:author" content="bigbenzh">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://bigbenzh.github.io/2021/10/06/%E5%8D%81%E4%B8%89%E6%9C%BA%E5%85%B5%E9%98%B2%E5%8D%AB%E5%9C%88%20%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9B%BE%E7%89%87/imagevisual_a.jpg">
@@ -192,7 +192,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-12 20:48:57" itemprop="dateModified" datetime="2021-10-12T20:48:57+08:00">2021-10-12</time>
+                <time title="修改时间：2021-10-12 20:50:49" itemprop="dateModified" datetime="2021-10-12T20:50:49+08:00">2021-10-12</time>
               </span>
 
           
@@ -259,6 +259,7 @@
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -405,6 +406,26 @@
   
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'd74797b21080a4e2876e',
+      clientSecret: '1b6784de82173ef70ad0ed8b957d872c2b46bffd',
+      repo        : 'bigbenzh.github.io',
+      owner       : 'bigbenzh',
+      admin       : ['bigbenzh'],
+      id          : 'de659bf1ee4898bcad7a7750eb3a6fb4',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
