@@ -27,13 +27,13 @@
 <meta property="og:site_name" content="不知名的小博客">
 <meta property="og:description" content="背景这《河洛群侠传》，玩到一半才发现漆笑儿和开明王城图只能二选一，被这个选项恶心到了，所以我决定自己把这个道具加进我的存档里。在一顿搜索后发现了阿B上的一篇文章，于是按照文章的方法导出并修改了明文的存档。但这种方法要修改dll文件，于是我转而寻找其他更加简单的方法（但事实证明，我找的方法一个比一个麻烦_(:з)∠)_）。先是mod，但因为单个存档不能同时适应两个mod，所以最后变成了直接修改非明文">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://bigbenzh.github.io/2021/07/01/%E6%88%91%E5%8F%AA%E6%98%AF%E6%83%B3%E7%BB%99%E6%88%91%E7%9A%84%E5%AD%98%E6%A1%A3%E5%8A%A0%E4%B8%AA%E9%81%93%E5%85%B7%E8%80%8C%E5%B7%B2%E2%80%94%E2%80%94%E3%80%8A%E6%B2%B3%E6%B4%9B%E7%BE%A4%E4%BE%A0%E4%BC%A0%E3%80%8B%E5%AD%98%E6%A1%A3%E7%AE%80%E6%98%93%E4%BF%AE%E6%94%B9%E7%9A%84%E8%AE%B0%E5%BD%95/p33163431.jpg">
+<meta property="og:image" content="https://bigbenzh.github.io/p33163431.jpg">
 <meta property="og:image" content="https://bigbenzh.github.io/2021/07/01/%E6%88%91%E5%8F%AA%E6%98%AF%E6%83%B3%E7%BB%99%E6%88%91%E7%9A%84%E5%AD%98%E6%A1%A3%E5%8A%A0%E4%B8%AA%E9%81%93%E5%85%B7%E8%80%8C%E5%B7%B2%E2%80%94%E2%80%94%E3%80%8A%E6%B2%B3%E6%B4%9B%E7%BE%A4%E4%BE%A0%E4%BC%A0%E3%80%8B%E5%AD%98%E6%A1%A3%E7%AE%80%E6%98%93%E4%BF%AE%E6%94%B9%E7%9A%84%E8%AE%B0%E5%BD%95/4cd2219aef24ea12a5bf04959ab96cf9_1276660159373097955.jpg">
 <meta property="article:published_time" content="2021-07-01T14:17:50.000Z">
 <meta property="article:modified_time" content="2021-07-02T03:23:50.000Z">
 <meta property="article:author" content="bigbenzh">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://bigbenzh.github.io/2021/07/01/%E6%88%91%E5%8F%AA%E6%98%AF%E6%83%B3%E7%BB%99%E6%88%91%E7%9A%84%E5%AD%98%E6%A1%A3%E5%8A%A0%E4%B8%AA%E9%81%93%E5%85%B7%E8%80%8C%E5%B7%B2%E2%80%94%E2%80%94%E3%80%8A%E6%B2%B3%E6%B4%9B%E7%BE%A4%E4%BE%A0%E4%BC%A0%E3%80%8B%E5%AD%98%E6%A1%A3%E7%AE%80%E6%98%93%E4%BF%AE%E6%94%B9%E7%9A%84%E8%AE%B0%E5%BD%95/p33163431.jpg">
+<meta name="twitter:image" content="https://bigbenzh.github.io/p33163431.jpg">
 
 <link rel="canonical" href="https://bigbenzh.github.io/2021/07/01/%E6%88%91%E5%8F%AA%E6%98%AF%E6%83%B3%E7%BB%99%E6%88%91%E7%9A%84%E5%AD%98%E6%A1%A3%E5%8A%A0%E4%B8%AA%E9%81%93%E5%85%B7%E8%80%8C%E5%B7%B2%E2%80%94%E2%80%94%E3%80%8A%E6%B2%B3%E6%B4%9B%E7%BE%A4%E4%BE%A0%E4%BC%A0%E3%80%8B%E5%AD%98%E6%A1%A3%E7%AE%80%E6%98%93%E4%BF%AE%E6%94%B9%E7%9A%84%E8%AE%B0%E5%BD%95/">
 
@@ -207,7 +207,7 @@
 </ul>
 <p>其中第二和第三部分是压缩过的，所以如果要修改这两个部分必须先解压缩数据。<br>背包里的道具数据在第三部分，所以我的目标是对第三部分进行修改。</p>
 <p>同时发现，对存档数据的编码、加解压使用的是MessagePack-Csharp库。</p>
-<h2 id="走的弯路，和用过的方法"><a href="#走的弯路，和用过的方法" class="headerlink" title="走的弯路，和用过的方法"></a>走的弯路，和用过的方法</h2><p>噢，原来是MessagePack+LZ4啊，好的，我已经完全搞懂了。<br><img src="p33163431.jpg"><br>由于对MessagePack一窍不通+没有发现读取存档的代码里对存档文件进行分段的操作，导致我花了好长时间才搞清楚过程。同时又因为对C#不了解，于是打算用python来写解包工具，又遇上无数的坑。<br>首先是LZ4MessagePackSerializer.Deserialize和LZ4MessagePackSerializer.Serialize都需要在调用时都必须要把数据的struct当作类型参数传进去，但gamedata结构有点复杂，不像Header_HELUO_1_0那样可以反编译后直接拿出来放进我的代码里，所以我决定退而求其次，手动把gamedata先分离出来，解压，然后用python的msgpack来deserialize。（万幸msgpack可以直接decode）<br>然后是MessagePack-Csharp的LZ4MessagePackerSerializer在压缩时，似乎并不是直接压缩，而是压缩之前还有一些重要操作。这些操作出现在调用LZ4压缩的ToLZ4BinaryCore方法和LZ4解压的DeserializeCore方法中。而我既读不懂这段代码，也找不到用python的msgpack和lz4代替的方法， 所以干脆直接照抄，把这一整段代码截下来放进我的代码里调用。</p>
+<h2 id="走的弯路，和用过的方法"><a href="#走的弯路，和用过的方法" class="headerlink" title="走的弯路，和用过的方法"></a>走的弯路，和用过的方法</h2><p>噢，原来是MessagePack+LZ4啊，好的，我已经完全搞懂了。<br><img src="/p33163431.jpg"><br>由于对MessagePack一窍不通+没有发现读取存档的代码里对存档文件进行分段的操作，导致我花了好长时间才搞清楚过程。同时又因为对C#不了解，于是打算用python来写解包工具，又遇上无数的坑。<br>首先是LZ4MessagePackSerializer.Deserialize和LZ4MessagePackSerializer.Serialize都需要在调用时都必须要把数据的struct当作类型参数传进去，但gamedata结构有点复杂，不像Header_HELUO_1_0那样可以反编译后直接拿出来放进我的代码里，所以我决定退而求其次，手动把gamedata先分离出来，解压，然后用python的msgpack来deserialize。（万幸msgpack可以直接decode）<br>然后是MessagePack-Csharp的LZ4MessagePackerSerializer在压缩时，似乎并不是直接压缩，而是压缩之前还有一些重要操作。这些操作出现在调用LZ4压缩的ToLZ4BinaryCore方法和LZ4解压的DeserializeCore方法中。而我既读不懂这段代码，也找不到用python的msgpack和lz4代替的方法， 所以干脆直接照抄，把这一整段代码截下来放进我的代码里调用。</p>
 <h2 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h2><p>最后我的补丁程序变成了python + C# dll，C# dll里包含导出存档的gamedata、将gamedata合并回去、LZ4压缩和解压缩等方法，而python则使用pythonnet库调用dll，和使用msgpack库来encode、decode导出来的gamedata。解码后的gamedata跟明文存档中一样是json格式，所以只要在inventory中添加一项：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;ItemId&quot;:&quot;it801069&quot;,&quot;Count&quot;:1,&quot;Durability&quot;:0,&quot;MaxDurability&quot;:0,&quot;Weight&quot;:0,&quot;EffectId&quot;:[],&quot;IsNew&quot;:true,&quot;Stolen&quot;:false,&quot;Level&quot;:0,&quot;Hurt&quot;:&#123;&#125;,&quot;HurtDifference&quot;:0.0,&quot;ForgeMaterials&quot;:&#123;&#125;,&quot;QualityTitle&quot;:&quot;&quot;,&quot;QuenchHoleCount&quot;:0,&quot;QuenchEffect&quot;:[],&quot;ReforgeType&quot;:-1,&quot;Id&quot;:null&#125;</span><br></pre></td></tr></table></figure>
 <p>就大功告成了。至此本菜鸟终于成功的修改了新版本的存档文件，可喜可贺。</p>
@@ -337,7 +337,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
